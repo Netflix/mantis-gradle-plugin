@@ -22,7 +22,7 @@ buildscript {
         }
     }
 
-    dependencies { classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:5.1.1' }
+    dependencies { classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:9.1.0' }
 }
 
 ext {
@@ -55,7 +55,7 @@ if (project.hasProperty('useMavenLocal')) {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -68,4 +68,6 @@ dependencies {
 license {
     ignoreFailures = false
 }
+
+
 
