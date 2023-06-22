@@ -16,18 +16,20 @@
 
 buildscript {
     repositories {
+        gradlePluginPortal()
         mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
     }
 
-    dependencies { classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:9.1.0' }
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:11.3.2'
+    }
 }
 
 ext {
     httpClientCacheVersion = '4.5.+'
-    nebulaTestVersion = '7.2.+'
 }
 
 allprojects {
@@ -59,10 +61,10 @@ repositories {
 }
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    compile "org.apache.httpcomponents:httpclient-cache:$httpClientCacheVersion"
-    testCompile "com.netflix.nebula:nebula-test:$nebulaTestVersion"
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation "org.apache.httpcomponents:httpclient-cache:$httpClientCacheVersion"
+    testImplementation "com.netflix.nebula:nebula-test:latest.release"
 }
 
 license {

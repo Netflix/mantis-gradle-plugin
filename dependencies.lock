@@ -1,0 +1,38 @@
+{
+    "checkstyle": {
+        "com.puppycrawl.tools:checkstyle": {
+            "locked": "8.45.1"
+        }
+    },
+    "compileClasspath": {
+        "org.apache.httpcomponents:httpclient-cache": {
+            "locked": "4.5.14"
+        }
+    },
+    "pmd": {
+        "net.sourceforge.pmd:pmd-java": {
+            "locked": "6.39.0"
+        }
+    },
+    "runtimeClasspath": {
+        "org.apache.httpcomponents:httpclient-cache": {
+            "locked": "4.5.14"
+        }
+    },
+    "testCompileClasspath": {
+        "com.netflix.nebula:nebula-test": {
+            "locked": "10.5.0"
+        },
+        "org.apache.httpcomponents:httpclient-cache": {
+            "locked": "4.5.14"
+        }
+    },
+    "testRuntimeClasspath": {
+        "com.netflix.nebula:nebula-test": {
+            "locked": "10.5.0"
+        },
+        "org.apache.httpcomponents:httpclient-cache": {
+            "locked": "4.5.14"
+        }
+    }
+}
