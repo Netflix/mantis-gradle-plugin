@@ -24,7 +24,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:10.6.0'
+        classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:11.3.2'
     }
 }
 
