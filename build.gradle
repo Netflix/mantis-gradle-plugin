@@ -30,7 +30,6 @@ buildscript {
 
 ext {
     httpClientCacheVersion = '4.5.+'
-    nebulaTestVersion = '7.2.+'
 }
 
 allprojects {
@@ -63,9 +62,9 @@ repositories {
 
 dependencies {
     implementation gradleApi()
-    compileOnly localGroovy()
+    implementation localGroovy()
     implementation "org.apache.httpcomponents:httpclient-cache:$httpClientCacheVersion"
-    testImplementation "com.netflix.nebula:nebula-test:$nebulaTestVersion"
+    testImplementation "com.netflix.nebula:nebula-test:latest.release"
 }
 
 license {
