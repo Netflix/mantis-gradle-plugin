@@ -22,7 +22,9 @@ buildscript {
         }
     }
 
-    dependencies { classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:9.1.0' }
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-netflixoss-project-plugin:10.6.0'
+    }
 }
 
 ext {
@@ -59,10 +61,10 @@ repositories {
 }
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    compile "org.apache.httpcomponents:httpclient-cache:$httpClientCacheVersion"
-    testCompile "com.netflix.nebula:nebula-test:$nebulaTestVersion"
+    implementation gradleApi()
+    compileOnly localGroovy()
+    implementation "org.apache.httpcomponents:httpclient-cache:$httpClientCacheVersion"
+    testImplementation "com.netflix.nebula:nebula-test:$nebulaTestVersion"
 }
 
 license {
