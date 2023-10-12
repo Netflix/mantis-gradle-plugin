@@ -70,7 +70,7 @@ class MantisPlugin implements Plugin<Project> {
                     readyForJobMaster = true
                 }
                 args = [project.distZip.archivePath,
-                        project.distZip.baseName,
+                        project.distZip.archiveBaseName,
                         project.version,
                         project.distZip.destinationDir,
                         readyForJobMaster]
