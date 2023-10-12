@@ -19,7 +19,9 @@ package io.mantisrx.mantisplugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.api.tasks.bundling.Zip
 
 class MantisPlugin implements Plugin<Project> {
 
@@ -60,19 +62,29 @@ class MantisPlugin implements Plugin<Project> {
             }
         }
 
-        project.task([type: JavaExec, dependsOn: ['clean', 'test', 'distZip', 'pathingJar']], CREATE_ZIP_ARTIFACT_TASKNAME) {
-            main 'io.mantisrx.runtime.command.LoadValidateCreateZip'
+        TaskProvider<JavaExec> createZipArtifactTask = project.tasks.register(CREATE_ZIP_ARTIFACT_TASKNAME, JavaExec)
+        createZipArtifactTask.configure {
+            mainClass.set( 'io.mantisrx.runtime.command.LoadValidateCreateZip')
+            dependsOn(pathingJar)
             doFirst {
-                classpath project.files(project.tasks.getByName("pathingJar").archivePath) + project.sourceSets.main.output
+                classpath = project.files(project.tasks.getByName("pathingJar").archivePath) + project.sourceSets.main.output
                 def readyForJobMaster = System.getProperty("READY_FOR_JOB_MASTER")
 
                 if (readyForJobMaster == null) {
                     readyForJobMaster = true
                 }
-                args = [project.distZip.archivePath,
-                        project.distZip.archiveBaseName,
-                        project.version,
-                        project.distZip.destinationDirectory,
+                def distZip = project.distZip as Zip
+                def json_version = distZip.archiveVersion.get()
+                def versionSuffix = System.getProperty("VERSION_SUFFIX")
+                if (versionSuffix != null && !versionSuffix.isEmpty()) {
+                    json_version = distZip.archiveVersion.get() + '-' + versionSuffix.trim()
+                }
+                def artifactProject = distZip.archiveBaseName.get()
+                def destinationDirectory = distZip.destinationDirectory.get().getAsFile()
+                args = [distZip.archiveFile.get().getAsFile(),
+                        artifactProject,
+                        json_version,
+                        destinationDirectory,
                         readyForJobMaster]
             }
         }
