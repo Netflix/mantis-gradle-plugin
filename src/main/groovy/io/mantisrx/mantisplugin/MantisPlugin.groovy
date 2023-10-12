@@ -72,7 +72,7 @@ class MantisPlugin implements Plugin<Project> {
                 args = [project.distZip.archivePath,
                         project.distZip.archiveBaseName,
                         project.version,
-                        project.distZip.destinationDir,
+                        project.distZip.destinationDirectory,
                         readyForJobMaster]
             }
         }
