@@ -53,9 +53,12 @@ class MantisPlugin implements Plugin<Project> {
 
         project.distZip.zip64 = true
 
-        project.task([type: Jar], "pathingJar") {
+        TaskProvider<Jar> pathingJar = project.tasks.register('pathingJar', Jar)
+        pathingJar.configure {
+            dependsOn('distZip')
+            outputs.upToDateWhen { false }
             doFirst {
-                appendix = "pathing"
+                archiveBaseName.set("mantis-temp-pathing")
                 manifest {
                     attributes "Class-Path": project.startScripts.classpath.files.join(" ")
                 }
