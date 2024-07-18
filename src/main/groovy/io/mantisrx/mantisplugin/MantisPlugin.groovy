@@ -42,9 +42,13 @@ class MantisPlugin implements Plugin<Project> {
             project.mainClassName = 'io.mantisrx.runtime.command.LoadValidateCreateZip'
         }
 
-        project.task("copyMantisJobProvider") {
+        def copyMantisJobProvider = project.task("copyMantisJobProvider") {
             def config = new File("src/main/resources/META-INF/services")
             outputs.dir config
+        }
+
+        project.tasks.named('sourcesJar').configure {
+            it.dependsOn(copyMantisJobProvider)
         }
 
         project.applicationDistribution.from(project.tasks.copyMantisJobProvider) {
