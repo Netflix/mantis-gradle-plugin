@@ -52,6 +52,9 @@ class MantisPlugin implements Plugin<Project> {
         project.tasks.named('processResources').configure {
             it.dependsOn(copyMantisJobProvider)
         }
+        project.tasks.named('licenseMain').configure {
+            it.dependsOn(copyMantisJobProvider)
+        }
         project.tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
             it.dependsOn(copyMantisJobProvider)
         }
