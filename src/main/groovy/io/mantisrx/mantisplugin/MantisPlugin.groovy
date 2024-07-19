@@ -58,6 +58,7 @@ class MantisPlugin implements Plugin<Project> {
         project.tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
             it.dependsOn(copyMantisJobProvider)
         }
+        project.tasks.distTar.enabled = false
 
         project.applicationDistribution.from(project.tasks.copyMantisJobProvider) {
             into "config"
