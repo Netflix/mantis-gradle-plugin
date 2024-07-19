@@ -50,6 +50,16 @@ class MantisPlugin implements Plugin<Project> {
         project.tasks.named('sourcesJar').configure {
             it.dependsOn(copyMantisJobProvider)
         }
+        project.tasks.named('processResources').configure {
+            it.dependsOn(copyMantisJobProvider)
+        }
+        project.tasks.named('licenseMain').configure {
+            it.dependsOn(copyMantisJobProvider)
+        }
+
+        project.tasks.named('distTar').configure {
+            it.dependsOn(project.tasks.pathingJar)
+        }
 
         project.applicationDistribution.from(project.tasks.copyMantisJobProvider) {
             into "config"
