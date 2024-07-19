@@ -16,6 +16,8 @@
 
 package io.mantisrx.mantisplugin
 
+import org.gradle.api.publish.ivy.tasks.PublishToIvyRepository
+import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.JavaExec
@@ -47,19 +49,16 @@ class MantisPlugin implements Plugin<Project> {
             outputs.dir config
         }
 
-        project.tasks.named('sourcesJar').configure {
-            it.dependsOn(copyMantisJobProvider)
-        }
         project.tasks.named('processResources').configure {
             it.dependsOn(copyMantisJobProvider)
         }
         project.tasks.named('licenseMain').configure {
             it.dependsOn(copyMantisJobProvider)
         }
-
-        project.tasks.named('distTar').configure {
-            it.dependsOn(project.tasks.pathingJar)
+        project.tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
+            it.dependsOn(copyMantisJobProvider)
         }
+        project.tasks.distTar.enabled = false
 
         project.applicationDistribution.from(project.tasks.copyMantisJobProvider) {
             into "config"
@@ -77,6 +76,14 @@ class MantisPlugin implements Plugin<Project> {
                     attributes "Class-Path": project.startScripts.classpath.files.join(" ")
                 }
             }
+        }
+
+        project.tasks.withType(PublishToIvyRepository).configureEach {
+            it.mustRunAfter('pathingJar')
+        }
+
+        project.tasks.withType(PublishToMavenRepository).configureEach {
+            it.mustRunAfter('pathingJar')
         }
 
         TaskProvider<JavaExec> createZipArtifactTask = project.tasks.register(CREATE_ZIP_ARTIFACT_TASKNAME, JavaExec)
